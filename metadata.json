@@ -1,0 +1,6 @@
+{
+  "name": "Hermes Global News Intelligence",
+  "description": "Personal free global news aggregation and local AI intelligence system for Raspberry Pi and Apple M1 Ollama.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

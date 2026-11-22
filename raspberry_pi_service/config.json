@@ -1,0 +1,182 @@
+{
+  "service": {
+    "name": "Hermes Global News Intelligence Service",
+    "lan_host": "127.0.0.1",
+    "lan_port": 8088,
+    "sqlite_path": "./hermes_news.db",
+    "log_level": "INFO"
+  },
+  "ollama": {
+    "base_url": "http://192.168.1.50:11434",
+    "timeout_seconds": 18,
+    "auto_discover_model": true,
+    "preferred_model_override": null,
+    "min_score_for_inference": 65,
+    "max_articles_per_cycle": 5
+  },
+  "refresh_intervals_minutes": {
+    "gdelt_doc_api": 10,
+    "breaking_tier_rss": 12,
+    "regional_and_tech_rss": 15,
+    "science_and_institutional_rss": 30
+  },
+  "retry_policy": {
+    "max_attempts": 3,
+    "base_backoff_seconds": 1.5,
+    "max_backoff_seconds": 15.0,
+    "rate_limit_delay_seconds": 1.0
+  },
+  "interests": {
+    "keywords": {
+      "artificial intelligence": 18,
+      "llm": 16,
+      "ollama": 18,
+      "raspberry pi": 18,
+      "semiconductor": 15,
+      "open source": 14,
+      "texas": 16,
+      "austin": 15,
+      "houston": 14,
+      "dallas": 14,
+      "bangladesh": 18,
+      "dhaka": 18,
+      "india": 15,
+      "nasa": 16,
+      "space": 14,
+      "aviation": 16,
+      "airlines": 14,
+      "faa": 15,
+      "central bank": 14,
+      "cybersecurity": 15
+    },
+    "high_trust_publishers": [
+      "BBC News",
+      "Al Jazeera",
+      "NPR",
+      "DW News",
+      "NASA",
+      "UN News",
+      "Ars Technica",
+      "TechCrunch",
+      "NDTV",
+      "Times of India",
+      "Reuters",
+      "Associated Press"
+    ]
+  },
+  "connectors": [
+    {
+      "id": "gdelt_doc_2",
+      "name": "GDELT DOC 2.0 JSON API",
+      "type": "gdelt_json",
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=sourcelang:eng&mode=ArtList&maxrecords=35&format=json",
+      "default_category": "global",
+      "interval_minutes": 10,
+      "enabled": true,
+      "permit_bs4_cleaning": false
+    },
+    {
+      "id": "google_news_rss",
+      "name": "Google News RSS",
+      "type": "rss",
+      "url": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
+      "default_category": "top",
+      "interval_minutes": 12,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "bbc_world_rss",
+      "name": "BBC RSS",
+      "type": "rss",
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "default_category": "global",
+      "interval_minutes": 12,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "aljazeera_rss",
+      "name": "Al Jazeera RSS",
+      "type": "rss",
+      "url": "https://www.aljazeera.com/xml/rss/all.xml",
+      "default_category": "global",
+      "interval_minutes": 12,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "npr_news_rss",
+      "name": "NPR RSS",
+      "type": "rss",
+      "url": "https://feeds.npr.org/1001/rss.xml",
+      "default_category": "us_texas",
+      "interval_minutes": 12,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "dw_world_rss",
+      "name": "DW RSS",
+      "type": "rss",
+      "url": "https://rss.dw.com/rdf/rss-en-all",
+      "default_category": "global",
+      "interval_minutes": 15,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "techcrunch_rss",
+      "name": "TechCrunch RSS",
+      "type": "rss",
+      "url": "https://techcrunch.com/feed/",
+      "default_category": "ai_tech",
+      "interval_minutes": 15,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "arstechnica_rss",
+      "name": "Ars Technica RSS",
+      "type": "rss",
+      "url": "https://feeds.arstechnica.com/arstechnica/index",
+      "default_category": "ai_tech",
+      "interval_minutes": 15,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "ndtv_top_rss",
+      "name": "NDTV RSS",
+      "type": "rss",
+      "url": "https://feeds.feedburner.com/ndtvnews-top-stories",
+      "default_category": "bd_india",
+      "interval_minutes": 15,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "times_of_india_rss",
+      "name": "Times of India RSS",
+      "type": "rss",
+      "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+      "default_category": "bd_india",
+      "interval_minutes": 15,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    },
+    {
+      "id": "nasa_un_rss",
+      "name": "NASA and UN News RSS",
+      "type": "multi_rss",
+      "urls": [
+        "https://www.nasa.gov/news-release/feed/",
+        "https://news.un.org/feed/subscribe/en/news/all/rss.xml"
+      ],
+      "default_category": "science",
+      "interval_minutes": 30,
+      "enabled": true,
+      "permit_bs4_cleaning": true
+    }
+  ]
+}
