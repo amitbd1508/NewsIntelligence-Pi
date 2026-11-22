@@ -8,16 +8,19 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENV_DIR="${APP_DIR}/.venv"
 
 # Bind strictly to LAN IP or localhost — never expose publicly to WAN
+DATA_DIR="${HOME}/.hermes/data"
+mkdir -p "${DATA_DIR}"
 export HERMES_HOST="${HERMES_HOST:-127.0.0.1}"
 export HERMES_PORT="${HERMES_PORT:-8088}"
 export OLLAMA_BASE_URL="${OLLAMA_BASE_URL:-http://192.168.1.50:11434}"
-export SQLITE_DB_PATH="${SQLITE_DB_PATH:-${APP_DIR}/hermes_news.db}"
+export SQLITE_DB_PATH="${SQLITE_DB_PATH:-${DATA_DIR}/hermes_news.db}"
 
 if [ -d "${VENV_DIR}" ]; then
   source "${VENV_DIR}/bin/activate"
 fi
 
 echo "Starting Hermes Global News Intelligence Service on http://${HERMES_HOST}:${HERMES_PORT}"
+echo "SQLite WAL Database Path: ${SQLITE_DB_PATH}"
 echo "Configured Apple M1 Ollama LAN Endpoint: ${OLLAMA_BASE_URL} (Dynamic model discovery via /api/tags)"
 cd "${APP_DIR}"
 exec python3 -m uvicorn main:app --host "${HERMES_HOST}" --port "${HERMES_PORT}" --no-access-log

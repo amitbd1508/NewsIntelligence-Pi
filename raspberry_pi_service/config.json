@@ -3,7 +3,7 @@
     "name": "Hermes Global News Intelligence Service",
     "lan_host": "127.0.0.1",
     "lan_port": 8088,
-    "sqlite_path": "./hermes_news.db",
+    "sqlite_path": "~/.hermes/data/hermes_news.db",
     "log_level": "INFO"
   },
   "ollama": {

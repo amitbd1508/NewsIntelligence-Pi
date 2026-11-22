@@ -1090,6 +1090,12 @@ export default function App() {
 
                   <div className="p-3.5 rounded-lg bg-slate-950 border border-slate-800/80 text-xs font-mono space-y-1">
                     <div className="text-slate-400">
+                      SQLite WAL Path:{' '}
+                      <span className="text-emerald-400">
+                        /home/pi/.hermes/data/hermes_news.db
+                      </span>
+                    </div>
+                    <div className="text-slate-400">
                       Discovery Endpoint:{' '}
                       <span className="text-slate-200">{ollamaUrlInput}/api/tags</span>
                     </div>

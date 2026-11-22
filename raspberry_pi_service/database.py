@@ -19,7 +19,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DB_PATH = os.environ.get("SQLITE_DB_PATH", "./hermes_news.db")
+DEFAULT_DB_PATH = os.path.expanduser("~/.hermes/data/hermes_news.db")
+DB_PATH = os.path.abspath(os.path.expanduser(os.environ.get("SQLITE_DB_PATH", DEFAULT_DB_PATH)))
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(

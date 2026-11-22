@@ -25,7 +25,9 @@ pip install --upgrade pip
 pip install -r "${APP_DIR}/../requirements.txt"
 
 echo "[4/5] Initializing SQLite WAL database & running verification test suite..."
-export SQLITE_DB_PATH="${APP_DIR}/hermes_news.db"
+DATA_DIR="${HOME}/.hermes/data"
+mkdir -p "${DATA_DIR}"
+export SQLITE_DB_PATH="${SQLITE_DB_PATH:-${DATA_DIR}/hermes_news.db}"
 python3 -c "import sys; sys.path.insert(0, '${APP_DIR}'); from database import init_db; init_db(); print('SQLite database initialized at', '${SQLITE_DB_PATH}')"
 pytest "${APP_DIR}/tests/test_news_service.py" -v
 
@@ -43,7 +45,7 @@ WorkingDirectory=${APP_DIR}
 Environment="HERMES_HOST=${LAN_HOST}"
 Environment="HERMES_PORT=${LAN_PORT}"
 Environment="OLLAMA_BASE_URL=${OLLAMA_URL}"
-Environment="SQLITE_DB_PATH=${APP_DIR}/hermes_news.db"
+Environment="SQLITE_DB_PATH=${SQLITE_DB_PATH}"
 ExecStart=${VENV_DIR}/bin/uvicorn main:app --host ${LAN_HOST} --port ${LAN_PORT} --workers 1
 Restart=on-failure
 RestartSec=10
