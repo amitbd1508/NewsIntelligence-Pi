@@ -1593,6 +1593,20 @@ ${itemsXml}
   app.get('/api/deliverables', (_req: Request, res: Response) => {
     const filesToRead = [
       {
+        id: 'readme',
+        title: 'README.md (Installation Guide & Screenshots)',
+        path: 'README.md',
+        language: 'markdown',
+        description: 'Step-by-step Raspberry Pi & M1 Ollama installation guide with architecture and terminal verification screenshots',
+      },
+      {
+        id: 'hermes_agent_prompt',
+        title: 'HERMES_AGENT_INSTALL_PROMPT.md (For Hermes Agent)',
+        path: 'raspberry_pi_service/docs/HERMES_AGENT_INSTALL_PROMPT.md',
+        language: 'markdown',
+        description: 'Copy-paste autonomous installation prompt and shell runbook for Hermes Agent to install & wire the service',
+      },
+      {
         id: 'requirements',
         title: 'requirements.txt',
         path: 'requirements.txt',

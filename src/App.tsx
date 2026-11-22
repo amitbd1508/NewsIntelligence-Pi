@@ -1193,17 +1193,203 @@ export default function App() {
           </div>
         )}
 
-        {/* SECTION 4: RASPBERRY PI & M1 OLLAMA DEPLOYMENT KIT (ALL 10 DELIVERABLES) */}
+        {/* SECTION 4: RASPBERRY PI & M1 OLLAMA DEPLOYMENT KIT (ALL DELIVERABLES + VISUAL GUIDE) */}
         {activeSection === 'deployment' && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="border-b border-slate-800 pb-5 flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h1 className="text-2xl font-bold tracking-tight text-slate-100">
-                  Raspberry Pi Python FastAPI &amp; M1 Ollama Deployment Kit
+                  README, Visual Installation Guide &amp; Raspberry Pi Deployment Kit
                 </h1>
                 <p className="text-sm text-slate-400 mt-1">
-                  Complete production Python source files generated in <code className="text-sky-300">/raspberry_pi_service/</code> and <code className="text-sky-300">/requirements.txt</code>.
+                  Step-by-step setup guide with screenshots and complete Python FastAPI source files in{' '}
+                  <code className="text-sky-300">/README.md</code> and{' '}
+                  <code className="text-sky-300">/raspberry_pi_service/</code>.
                 </p>
+              </div>
+            </div>
+
+            {/* Visual Architecture & Terminal Verification Screenshots + Quick Setup Steps */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+              {/* Screenshot 1: Architecture Diagram */}
+              <div className="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden flex flex-col">
+                <div className="aspect-video bg-slate-950 relative overflow-hidden border-b border-slate-800">
+                  <img
+                    src="/src/assets/images/raspberry_pi_m1_architecture_1795384540544.jpg"
+                    alt="Hermes Raspberry Pi FastAPI, SQLite WAL, and Apple M1 Ollama LAN Architecture Diagram"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-5 space-y-2.5 flex-1">
+                  <div className="text-xs font-mono text-sky-400">
+                    01. Private LAN Topology &amp; Port Separation
+                  </div>
+                  <h2 className="text-base font-semibold text-slate-100">
+                    Raspberry Pi Collector (Port 8088) + Apple M1 Ollama (Port 11434)
+                  </h2>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Your existing Hermes Gateway stays on its current port without conflict. The FastAPI news service runs on{' '}
+                    <code className="text-slate-200">127.0.0.1:8088</code>, persists to SQLite WAL at{' '}
+                    <code className="text-emerald-400">/home/pi/.hermes/data/hermes_news.db</code>, and dynamically discovers your M1 Mac Ollama model via{' '}
+                    <code className="text-slate-200">GET /api/tags</code>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Screenshot 2: Raspberry Pi Terminal Installation & Pytest Verification */}
+              <div className="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden flex flex-col">
+                <div className="aspect-video bg-slate-950 relative overflow-hidden border-b border-slate-800">
+                  <img
+                    src="/src/assets/images/terminal_install_verification_1795384540475.jpg"
+                    alt="Raspberry Pi OS terminal running install.sh, initializing SQLite WAL database, and passing 5 pytest checks"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-5 space-y-2.5 flex-1">
+                  <div className="text-xs font-mono text-emerald-400">
+                    02. Automated Raspberry Pi Setup &amp; Verification
+                  </div>
+                  <h2 className="text-base font-semibold text-slate-100">
+                    One-Command Virtualenv, SQLite WAL Init &amp; Systemd Service
+                  </h2>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Running <code className="text-slate-200">./scripts/install.sh</code> provisions the Python virtual environment, initializes{' '}
+                    <code className="text-emerald-400">~/.hermes/data/hermes_news.db</code> in WAL mode, runs the 5 automated pytest verification checks, and installs the user systemd unit.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Direct Instruction Card for Hermes Agent Autonomous Installation */}
+            <div className="p-6 rounded-xl border border-slate-800 bg-slate-900/60 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-mono font-semibold text-sky-400">
+                    Hermes Agent Autonomous Installer Prompt
+                  </div>
+                  <h2 className="text-base font-semibold text-slate-100 mt-0.5">
+                    Copy &amp; Paste This Instruction Directly to Your Hermes Agent
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleCopyText(
+                      'hermes_agent_direct_prompt',
+                      `Hermes Agent: Install and integrate the Global News Intelligence Service on this Raspberry Pi.\n\n1. Preserve all existing Hermes Gateway and Dashboard files. Do not change the existing Hermes Gateway port.\n2. Use SQLite WAL database path: /home/pi/.hermes/data/hermes_news.db\n3. Bind the FastAPI news service locally to 127.0.0.1:8088 (HERMES_HOST=127.0.0.1, HERMES_PORT=8088).\n4. Point OLLAMA_BASE_URL to the Apple M1 Mac on LAN (e.g. http://192.168.1.50:11434) and use dynamic /api/tags model discovery.\n5. Run the automated installer and test suite:\n   mkdir -p "$HOME/.hermes/data"\n   cd raspberry_pi_service\n   chmod +x scripts/install.sh scripts/start.sh\n   HERMES_HOST="127.0.0.1" HERMES_PORT="8088" SQLITE_DB_PATH="$HOME/.hermes/data/hermes_news.db" ./scripts/install.sh\n6. Enable and start the user systemd service:\n   systemctl --user enable --now hermes-news-intelligence.service\n7. Verify health at http://127.0.0.1:8088/api/health and proxy /api/articles, /api/clusters, /api/health, /api/collect, and /api/feed.rss into the existing Hermes Dashboard.`
+                    )
+                  }
+                  className="px-3.5 py-2 text-xs font-semibold bg-sky-400 hover:bg-sky-300 text-slate-950 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>
+                    {copiedId === 'hermes_agent_direct_prompt'
+                      ? 'Copied Hermes Agent Instruction'
+                      : 'Copy Instruction for Hermes Agent'}
+                  </span>
+                </button>
+              </div>
+              <pre className="p-4 rounded-lg bg-slate-950 border border-slate-800/90 text-xs font-mono text-slate-200 overflow-x-auto leading-relaxed">
+                <code>{`Hermes Agent: Install and integrate the Global News Intelligence Service on this Raspberry Pi.
+
+1. Preserve all existing Hermes Gateway and Dashboard files. Do not change the existing Hermes Gateway port.
+2. Use SQLite WAL database path: /home/pi/.hermes/data/hermes_news.db
+3. Bind the FastAPI news service locally to 127.0.0.1:8088 (HERMES_HOST=127.0.0.1, HERMES_PORT=8088).
+4. Point OLLAMA_BASE_URL to the Apple M1 Mac on LAN (e.g. http://192.168.1.50:11434) and use dynamic /api/tags model discovery.
+5. Run the automated installer and test suite:
+   mkdir -p "$HOME/.hermes/data"
+   cd raspberry_pi_service
+   chmod +x scripts/install.sh scripts/start.sh
+   HERMES_HOST="127.0.0.1" HERMES_PORT="8088" SQLITE_DB_PATH="$HOME/.hermes/data/hermes_news.db" ./scripts/install.sh
+6. Enable and start the user systemd service:
+   systemctl --user enable --now hermes-news-intelligence.service
+7. Verify health at http://127.0.0.1:8088/api/health and proxy /api/articles, /api/clusters, /api/health, /api/collect, and /api/feed.rss into the existing Hermes Dashboard.`}</code>
+              </pre>
+            </div>
+
+            {/* 3-Step Quick-Copy Installation Walkthrough */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-semibold text-sky-400">
+                    Step 1 · Apple M1 Mac (Ollama LAN)
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleCopyText(
+                        'step1_cmd',
+                        'launchctl setenv OLLAMA_HOST "192.168.1.50:11434"\n# Restart Ollama app, then test from Pi:\ncurl -s http://192.168.1.50:11434/api/tags'
+                      )
+                    }
+                    className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>{copiedId === 'step1_cmd' ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Bind Ollama on your M1 Mac to its private LAN IP so the Raspberry Pi can auto-discover the active model:
+                </p>
+                <pre className="p-3 rounded-lg bg-slate-950 border border-slate-800/80 text-[11px] font-mono text-slate-200 overflow-x-auto">
+                  <code>{`launchctl setenv OLLAMA_HOST "192.168.1.50:11434"\n# Verify from Raspberry Pi:\ncurl -s http://192.168.1.50:11434/api/tags`}</code>
+                </pre>
+              </div>
+
+              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-semibold text-emerald-400">
+                    Step 2 · Raspberry Pi Install &amp; SQLite Init
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleCopyText(
+                        'step2_cmd',
+                        'cd raspberry_pi_service\nchmod +x scripts/install.sh scripts/start.sh\nexport SQLITE_DB_PATH="$HOME/.hermes/data/hermes_news.db"\nexport OLLAMA_BASE_URL="http://192.168.1.50:11434"\n./scripts/install.sh'
+                      )
+                    }
+                    className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>{copiedId === 'step2_cmd' ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Create virtualenv, initialize SQLite at <code className="text-emerald-400">~/.hermes/data/hermes_news.db</code>, and run pytest:
+                </p>
+                <pre className="p-3 rounded-lg bg-slate-950 border border-slate-800/80 text-[11px] font-mono text-slate-200 overflow-x-auto">
+                  <code>{`cd raspberry_pi_service\nchmod +x scripts/install.sh scripts/start.sh\nexport SQLITE_DB_PATH="$HOME/.hermes/data/hermes_news.db"\n./scripts/install.sh`}</code>
+                </pre>
+              </div>
+
+              <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-semibold text-amber-400">
+                    Step 3 · Start Service &amp; Verify Health
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleCopyText(
+                        'step3_cmd',
+                        'systemctl --user enable --now hermes-news-intelligence.service\ncurl -s http://127.0.0.1:8088/api/health | python3 -m json.tool'
+                      )
+                    }
+                    className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>{copiedId === 'step3_cmd' ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Start the service on port <code className="text-slate-200">8088</code> (leaving your Hermes Gateway port untouched) and test <code className="text-slate-200">/api/health</code>:
+                </p>
+                <pre className="p-3 rounded-lg bg-slate-950 border border-slate-800/80 text-[11px] font-mono text-slate-200 overflow-x-auto">
+                  <code>{`systemctl --user enable --now hermes-news-intelligence\ncurl -s http://127.0.0.1:8088/api/health`}</code>
+                </pre>
               </div>
             </div>
 
